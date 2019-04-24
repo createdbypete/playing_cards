@@ -50,18 +50,30 @@ class CardDeckTest < MiniTest::Test
       refute_equal card, drawn_card, "Drawn card found in remaining deck"
     end
   end
+
+  def test_deck_can_be_cut
+    card_deck = CardDeck.new
+    number_of_cards = 10
+    size_of_right_cut = (EXPECTED_NUMBER_OF_CARDS - number_of_cards)
+
+    left, right = *card_deck.cut!(number_of_cards)
+
+    assert_equal number_of_cards, left.size
+    assert_equal size_of_right_cut, right.size
+  end
+
+  def test_a_cut_deck_can_be_rejoined
+    card_deck = CardDeck.new
+    number_of_cards = 10
+
+    left, right = *card_deck.cut!(number_of_cards)
+    assert_equal card_deck, (left + right)
+  end
 end
 
 class CardDeck
-  def initialize
-    @cards = [].tap do |cards|
-      %w(♠︎ ♣︎ ♥︎ ♦︎).each do |suite|
-        %w(A 2 3 4 5 6 7 8 9 10 J Q K).each do |rank|
-          cards << Card.new(suite, rank)
-        end
-      end
-      2.times { cards << Card.new("*", "Joker") }
-    end
+  def initialize(cards = build_cards)
+    @cards = cards
   end
 
   def each(&block)
@@ -81,6 +93,22 @@ class CardDeck
     @cards.shift
   end
 
+  def cut!(num_of_cards)
+    [
+      CardDeck.new(@cards[0, num_of_cards]),
+      CardDeck.new(@cards[num_of_cards, @cards.size])
+    ]
+  end
+
+  def +(other_deck)
+    cards_from_other = []
+    other_deck.each do |card|
+      cards_from_other << card
+    end
+
+    CardDeck.new(@cards + cards_from_other)
+  end
+
   def ==(other_deck)
     cards_from_other_deck = []
     other_deck.each do |card|
@@ -88,6 +116,19 @@ class CardDeck
     end
 
     @cards == cards_from_other_deck
+  end
+
+  private
+
+  def build_cards
+    [].tap do |cards|
+      %w(♠︎ ♣︎ ♥︎ ♦︎).each do |suite|
+        %w(A 2 3 4 5 6 7 8 9 10 J Q K).each do |rank|
+          cards << Card.new(suite, rank)
+        end
+      end
+      2.times { cards << Card.new("*", "Joker") }
+    end
   end
 end
 
