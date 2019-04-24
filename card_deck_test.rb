@@ -38,6 +38,18 @@ class CardDeckTest < MiniTest::Test
     shuffled_deck_2 = CardDeck.new.shuffle!
     refute_equal shuffled_deck_1, shuffled_deck_2
   end
+
+  def test_a_card_can_be_drawn_from_the_deck
+    card_deck = CardDeck.new.shuffle!
+    drawn_card = card_deck.draw!
+    deck_size_after_draw = card_deck.size
+
+    assert_equal (EXPECTED_NUMBER_OF_CARDS - 1), deck_size_after_draw
+
+    card_deck.each do |card|
+      refute_equal card, drawn_card, "Drawn card found in remaining deck"
+    end
+  end
 end
 
 class CardDeck
@@ -62,6 +74,11 @@ class CardDeck
 
   def shuffle!
     @cards.shuffle!
+    self
+  end
+
+  def draw!
+    @cards.shift
   end
 
   def ==(other_deck)
