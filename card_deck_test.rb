@@ -26,6 +26,18 @@ class CardDeckTest < MiniTest::Test
 
     assert_equal EXPECTED_CARDS, actual_cards
   end
+
+  def test_the_deck_is_shuffled
+    unshuffled_deck_1 = CardDeck.new
+    unshuffled_deck_2 = CardDeck.new
+    assert_equal unshuffled_deck_1, unshuffled_deck_2
+
+    shuffled_deck_1 = CardDeck.new.shuffle!
+    refute_equal unshuffled_deck_1, shuffled_deck_1
+
+    shuffled_deck_2 = CardDeck.new.shuffle!
+    refute_equal shuffled_deck_1, shuffled_deck_2
+  end
 end
 
 class CardDeck
@@ -47,6 +59,19 @@ class CardDeck
   def size
     @cards.size
   end
+
+  def shuffle!
+    @cards.shuffle!
+  end
+
+  def ==(other_deck)
+    cards_from_other_deck = []
+    other_deck.each do |card|
+      cards_from_other_deck << card
+    end
+
+    @cards == cards_from_other_deck
+  end
 end
 
 class Card
@@ -55,5 +80,9 @@ class Card
   def initialize(suite, rank)
     @suite = suite
     @rank = rank
+  end
+
+  def ==(other)
+    suite == other.suite && rank == other.rank
   end
 end
