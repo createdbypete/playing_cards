@@ -1,9 +1,13 @@
 defmodule PlayingCards.CardDeck do
+  alias PlayingCards.Card
+
   @cards (
            cards =
-             for suit <- ~w(♠︎ ♣︎ ♥︎ ♦︎), rank <- ~w(A 2 3 4 5 6 7 8 9 10 J Q K), do: {suit, rank}
+             for suit <- ~w(♠︎ ♣︎ ♥︎ ♦︎),
+                 rank <- ~w(A 2 3 4 5 6 7 8 9 10 J Q K),
+                 do: %Card{suit: suit, rank: rank}
 
-           jokers = for joker <- ~w(Joker Joker), do: {"*", joker}
+           jokers = for joker <- ~w(Joker Joker), do: %Card{suit: "*", rank: joker}
            cards ++ jokers
          )
 

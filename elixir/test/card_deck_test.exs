@@ -1,7 +1,7 @@
 defmodule PlayingCards.CardDeckTest do
   use ExUnit.Case, async: true
 
-  alias PlayingCards.CardDeck
+  alias PlayingCards.{CardDeck,Card}
 
   @expected_number_of_cards 54
   test "deck has correct number of cards" do
@@ -22,7 +22,7 @@ defmodule PlayingCards.CardDeckTest do
     deck = CardDeck.new()
 
     actual_cards =
-      Enum.reduce(Enum.reverse(deck), %{}, fn {suit, rank}, acc ->
+      Enum.reduce(Enum.reverse(deck), %{}, fn %Card{suit: suit, rank: rank}, acc ->
         Map.update(acc, suit, [rank], &[rank | &1])
       end)
 
