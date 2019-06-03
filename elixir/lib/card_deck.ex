@@ -7,7 +7,7 @@ defmodule PlayingCards.CardDeck do
                  rank <- ~w(A 2 3 4 5 6 7 8 9 10 J Q K),
                  do: %Card{suit: suit, rank: rank}
 
-           jokers = for joker <- ~w(Joker Joker), do: %Card{suit: "*", rank: joker}
+           jokers = List.duplicate(%Card{suit:"*", rank:"Joker"}, 2)
            cards ++ jokers
          )
 
