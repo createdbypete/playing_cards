@@ -1,7 +1,7 @@
 defmodule PlayingCards.CardDeckTest do
   use ExUnit.Case, async: true
 
-  alias PlayingCards.{CardDeck,Card}
+  alias PlayingCards.{CardDeck, Card}
 
   @expected_number_of_cards 54
   test "deck has correct number of cards" do
