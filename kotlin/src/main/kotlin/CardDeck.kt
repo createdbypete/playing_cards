@@ -57,12 +57,3 @@ class CardDeck(private val cards: MutableList<Card> = mutableListOf()) : Iterabl
     }
 }
 
-enum class Suite {
-    SPADES, CLUBS, HEARTS, DIAMONDS, WILD
-}
-
-enum class Rank {
-    ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, JOKER
-}
-
-data class Card(val suite: Suite, val rank: Rank)
