@@ -5,7 +5,7 @@ class CardDeckTest {
 
     @Test
     fun `deck has correct number of cards`() {
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck.build()
         assert(expectedNumberOfCards == cardDeck.size())
     }
 
@@ -24,7 +24,7 @@ class CardDeckTest {
 
     @Test
     fun `it contains a full deck of cards`() {
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck.build()
         val actualCards = cardDeck.fold(mutableMapOf<Suite, MutableList<Rank>>()) { actualCards, card ->
             actualCards.getOrPut(card.suite, ::mutableListOf).add(card.rank)
             actualCards
@@ -34,20 +34,20 @@ class CardDeckTest {
 
     @Test
     fun `the deck is shuffled`() {
-        val unshuffledDeck1 = CardDeck()
-        val unshuffledDeck2 = CardDeck()
+        val unshuffledDeck1 = CardDeck.build()
+        val unshuffledDeck2 = CardDeck.build()
         assert(unshuffledDeck1 == unshuffledDeck2)
 
-        val shuffledDeck1 = CardDeck().shuffle()
+        val shuffledDeck1 = CardDeck.build().shuffle()
         assert(unshuffledDeck1 != shuffledDeck1)
 
-        val shuffledDeck2 = CardDeck().shuffle()
+        val shuffledDeck2 = CardDeck.build().shuffle()
         assert(shuffledDeck1 != shuffledDeck2)
     }
 
     @Test
     fun `a card can be drawn from the deck`() {
-        val cardDeck = CardDeck().shuffle()
+        val cardDeck = CardDeck.build().shuffle()
         val drawnCard = cardDeck.draw()
         val deckSizeAfterDraw = cardDeck.size()
 
@@ -60,7 +60,7 @@ class CardDeckTest {
 
     @Test
     fun `deck can be cut`() {
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck.build()
         val numberOfCards = 10
         val sizeOfRightCut = (expectedNumberOfCards - numberOfCards)
 
@@ -72,7 +72,7 @@ class CardDeckTest {
 
     @Test
     fun `a cut deck can be rejoined`() {
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck.build()
         val numberOfCards = 10
 
         val (left, right) = cardDeck.cut(numberOfCards)
