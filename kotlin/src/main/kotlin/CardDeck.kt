@@ -50,7 +50,7 @@ class CardDeck(vararg cards: Card) : Iterable<Card> {
             CardDeck(*_cards.drop(numberOfCards).toTypedArray())
         )
 
-    fun join(otherDeck: CardDeck): CardDeck {
+    operator fun plus(otherDeck: CardDeck): CardDeck {
         for (card in otherDeck) {
             _cards.add(card)
         }

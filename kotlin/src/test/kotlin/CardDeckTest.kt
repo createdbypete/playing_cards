@@ -77,7 +77,7 @@ class CardDeckTest {
 
         val (left, right) = cardDeck.cut(numberOfCards)
 
-        assert(cardDeck == (left.join(right)))
+        assert(cardDeck == (left + right))
 
     }
 }
