@@ -19,7 +19,7 @@ class CardDeckTest {
         Suite.CLUBS    to expectedCardsInSuite,
         Suite.HEARTS   to expectedCardsInSuite,
         Suite.DIAMONDS to expectedCardsInSuite,
-        Suite.WILD     to listOf(Rank.JOKER, Rank.JOKER)
+        Suite.WILD to listOf(Rank.JOKER, Rank.JOKER)
     )
 
     @Test
@@ -47,15 +47,14 @@ class CardDeckTest {
 
     @Test
     fun `a card can be drawn from the deck`() {
-        val cardDeck = CardDeck.build().shuffle()
-        val drawnCard = cardDeck.draw()
-        val deckSizeAfterDraw = cardDeck.size()
+        val deckBeforeDraw = CardDeck.build().shuffle()
+        val (drawnCard, deckAfterDraw) = deckBeforeDraw.draw()
+        val deckSizeAfterDraw = deckAfterDraw.size()
 
         assert((expectedNumberOfCards - 1) == deckSizeAfterDraw)
 
-        cardDeck.forEach { card ->
-            assert(card != drawnCard) { "Drawn card found in remaining deck" }
-        }
+        assert(deckBeforeDraw.contains(drawnCard))
+        assert(!deckAfterDraw.contains(drawnCard))
     }
 
     @Test
@@ -78,6 +77,5 @@ class CardDeckTest {
         val (left, right) = cardDeck.cut(numberOfCards)
 
         assert(cardDeck == (left + right))
-
     }
 }
